@@ -1,0 +1,55 @@
+{% extends "blog/base.html" %} {% load crispy_forms_tags %} {% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <!-- Profile Sidebar at the Top -->
+    <div class="col-md-8">
+      <div class="card shadow-sm text-center mb-4">
+        <div class="card-body">
+          <!-- Profile Image -->
+          <img
+            class="rounded-circle mb-3 border"
+            src="{{ user.profile.image.url }}"
+            alt="Profile Image"
+            style="width: 120px; height: 120px; object-fit: cover"
+          />
+          <!-- Username -->
+          <h4 class="card-title text-primary mb-0">{{ user.username }}</h4>
+          <!-- Email -->
+          <p class="text-muted small mb-3">{{ user.email }}</p>
+          <!-- Reset Password Button -->
+          <a
+            href="{% url 'password_reset' %}"
+            class="btn btn-outline-info btn-sm"
+          >
+            Reset Password
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Info Form Below -->
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+              <legend class="border-bottom mb-4 pb-2">Profile Info</legend>
+              <!-- Crispy Forms for User and Profile -->
+              {{ u_form|crispy }} {{ p_form|crispy }}
+            </fieldset>
+            <!-- Submit Button -->
+            <div class="form-group text-center">
+              <button class="btn btn-info text-white" type="submit">
+                Update
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
